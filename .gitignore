@@ -1,0 +1,25 @@
+# 建置產出與暫存資料夾
+bin/
+obj/
+artifacts/
+
+# 使用者與 IDE 設定檔
+.vscode/
+*.user
+*.suo
+*.sln.docstates
+.idea/
+*.sln.iml
+
+# 系統產生檔案
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# 暫存與編輯器檔案
+*.swp
+
+# 自訂忽略資料夾
+templates/
