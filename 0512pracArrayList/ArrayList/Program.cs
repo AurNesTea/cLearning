@@ -6,13 +6,16 @@ class ArrayList
 {
     static void Main(string[] args)
     {
-        pracArray01("一維陣列範例");
-        BasicTools.Waiting();
+        // pracArray01("一維陣列範例");
+        // BasicTools.Waiting();
 
-        pracMultiArray01("多維陣列範例");
-        BasicTools.Waiting();
+        // pracMultiArray01("多維陣列範例");
+        // BasicTools.Waiting();
 
-        pracList01("List 陣列範例");
+        // pracList01("List 陣列範例");
+        // BasicTools.Waiting();
+
+        pracList02("List 陣列加入(插入)、移除值範例");
         BasicTools.Waiting();
     }
 
@@ -232,6 +235,58 @@ class ArrayList
         Console.WriteLine("\r\n");
 
         //印出結尾
+        BasicTools.ShowEnding();
+    }
+
+    static void pracList02(string titleName)
+    {
+        // 顯示標題列
+        BasicTools.ShowTitle(titleName);
+
+        // 宣告List變數
+        List<string> userList = new List<string> { "劉二", "陳六", "方七" };
+        List<string> memberList = new List<string> {"楊四", "王五"};
+        List<string> adminList = new List<string> { "許九", "劉十" };
+
+        // 陣列(初始)
+        BasicTools.ShowList(userList, "userList", "陣列(初始)", true);
+
+
+        // 陣列(加入李大,孫三,柳八)
+        userList.Insert(0, "李大");
+        userList.Insert(2, "孫三");
+        userList.Add("柳八");
+        BasicTools.ShowList(userList, "userList", "陣列(加入李大,孫三,柳八)", true);
+
+        // 陣列(插入範圍楊四,王五,許九,劉十)
+        int int_pos = userList.IndexOf("陳六");
+        userList.InsertRange(int_pos, memberList);
+        userList.AddRange(adminList);
+        BasicTools.ShowList(userList, "userList", "陣列(插入範圍楊四,王五,許九,劉十)", true);
+
+        // 陣列(移除陳六,孫三)
+        List<string> removerList01 = new List<string> {"陳六", "孫三"};
+        // userList.Remove("陳六");
+        // userList.Remove("孫三");
+        foreach (var item in removerList01)
+        {
+            userList.Remove(item);
+        }
+        BasicTools.ShowList(userList, "userList", "陣列(移除陳六,孫三)", true);
+
+        // 陣列(移除1)
+        userList.RemoveAt(1);
+        BasicTools.ShowList(userList, "userList", "陣列(移除1)", true);
+
+        // 陣列(移除範圍2,2)
+        userList.RemoveRange(2, 2);
+        BasicTools.ShowList(userList, "userList", "陣列(移除範圍2,2)", true);
+
+        // 陣列清空
+        userList.Clear();
+        BasicTools.ShowList(userList, "userList", "清除陣列中所有元素", true);
+
+        // 結尾.
         BasicTools.ShowEnding();
     }
 
