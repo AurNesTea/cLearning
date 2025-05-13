@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System;
+using System.Collections.Generic;
 
 class ArrayList
 {
@@ -9,6 +10,9 @@ class ArrayList
         BasicTools.Waiting();
 
         pracMultiArray01("多維陣列範例");
+        BasicTools.Waiting();
+
+        pracList01("List 陣列範例");
         BasicTools.Waiting();
     }
 
@@ -188,4 +192,47 @@ class ArrayList
 
         BasicTools.ShowEnding();
     }
+
+    static void pracList01(string titleName)
+    {
+        // 顯示標題列
+        BasicTools.ShowTitle(titleName);
+
+        // 宣告List變數
+        List<int> numberList01 = new List<int>();
+        List<int> numberList02 = new List<int>(5) { 1, 2, 3, 4, 5 };
+        List<string> weekList = new List<string> { "Mon", "Tue", "Wed", "Thrus", "Fri", "Sat", "Sun" };
+
+        numberList01.Add(1);
+        numberList01.Add(2);
+        numberList01.Add(3);
+        numberList01.Add(4);
+        numberList01.Add(5);
+
+        // 顯示在畫面中
+        Console.Write("陣列 numberList1： ");
+        foreach (var item in numberList01)
+        {
+            Console.Write($"{item} ");
+        }
+        Console.WriteLine("\r\n");
+
+        Console.Write("陣列 numberList2： ");
+        foreach (var item in numberList02)
+        {
+            Console.Write($"{item} ");
+        }
+        Console.WriteLine("\r\n");
+
+        Console.Write("陣列 weekList： ");
+        foreach (var item in weekList)
+        {
+            Console.Write($"{item} ");
+        }
+        Console.WriteLine("\r\n");
+
+        //印出結尾
+        BasicTools.ShowEnding();
+    }
+
 }
