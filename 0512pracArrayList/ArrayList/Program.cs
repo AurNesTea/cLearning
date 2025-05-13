@@ -1,0 +1,191 @@
+﻿// See https://aka.ms/new-console-template for more information
+using System;
+
+class ArrayList
+{
+    static void Main(string[] args)
+    {
+        pracArray01("一維陣列範例");
+        BasicTools.Waiting();
+
+        pracMultiArray01("多維陣列範例");
+        BasicTools.Waiting();
+    }
+
+    private static void pracArray01(string titleName)
+    {
+        //show Title
+        BasicTools.ShowTitle(titleName);
+
+        // declare variables
+        int[] numberArray1;
+        int[] numberArray2 = new int[5];
+        int[] intArray1 = new int[]{1, 3, 5, 7, 9};
+        int[] intArray2 = {2, 4, 6, 8, 0};
+        string[] weekDays = new string[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+        string[] weekendDays = {"Saturday", "Sunday"};
+        string[] userNames = {"Amber", "Belle", "Carol", "Dempsey", "Emma"};
+
+        numberArray1 = new int[] { 1, 2, 3, 4, 5 };
+        numberArray2[0] = 6;
+        numberArray2[1] = 7;
+        numberArray2[2] = 8;
+        numberArray2[3] = 9;
+        numberArray2[4] = 10;
+
+        //show variables
+
+        Console.Write("陣列 numberArray1：");
+        foreach (var item in numberArray1)
+        {
+            Console.Write($"{item}, ");
+        }
+        Console.WriteLine("\r\n");
+
+        Console.Write("陣列 numberArray2：");
+        foreach (var item in numberArray2)
+        {
+            Console.Write("{0}, ", item);
+        }
+        Console.WriteLine("\r\n");
+
+        Console.Write("陣列 intArray1：");
+        foreach (var item in intArray1)
+        {
+            Console.Write($"{item}, ");
+        }
+        Console.WriteLine("\r\n");
+
+        Console.Write("陣列 intArray2：");
+        foreach (var num in intArray2)
+        {
+            Console.Write($"{num}, ");
+        }
+        Console.WriteLine("\r\n");
+        
+        Console.Write("陣列 weekDays：");
+        foreach (var weekDay in weekDays)
+        {
+            Console.Write($"{weekDay}, ");
+        }
+        Console.WriteLine("\r\n");
+
+        Console.Write("陣列 weekendDays：");
+        foreach (var weekendDay in weekendDays)
+        {
+            Console.Write($"{weekendDay}, ");
+        }
+        Console.WriteLine("\r\n");
+        
+        Console.Write("陣列 userName：");
+        foreach (var userName in userNames)
+        {
+            Console.Write($"{userName}, ");
+        }
+        Console.WriteLine("\r\n");
+
+        // 等待輸入任意鍵結束.
+        BasicTools.ShowEnding();
+    }
+
+    private static void pracMultiArray01(string titleName)
+    {
+        // 顯示標題列
+        BasicTools.ShowTitle(titleName);
+
+        // 宣告變數
+        string[,] arrayMember = new string[3,2]
+        {
+            {"Normal", "一般會員"},
+            {"VIP", "VIP會員"},
+            {"Noble", "尊爵會員"}
+        };
+        int[,] array2D1 = new int[,]
+        {
+            { 1, 38 },
+            { 2, 62 },
+            { 3, 36 },
+            { 4, 58 }
+        };
+        int[,] array2D2 = new int[,]
+        {
+            { 30, 25 },
+            { 42, 40 },
+            { 52, 60 },
+            { 27, 38 }
+        };
+        int[,,] array3D = new int[2, 3, 4]
+        {
+            {
+                { 1, 2, 3 , 4},
+                { 5, 6, 7 ,8} ,
+                { 9, 10, 11 ,12}
+            },
+            {
+                { 13, 14, 15 , 16},
+                { 17, 18, 19 , 20} ,
+                { 21, 22, 23 , 24}
+            }
+        };
+        int total = 0;
+        int index = 0;
+
+        // 顯示會員資料
+        Console.WriteLine("顯示陣列 arrayMember 所有元素值：");
+        index = 0;
+        foreach (var item in arrayMember)
+        {
+            Console.Write($"{item}");
+            index++;
+            if (index % 2 == 0)
+                Console.Write("  ");
+            else
+                Console.Write("=");
+        }
+        Console.WriteLine("總只有：{0} 筆記錄!!", arrayMember.Length);
+        Console.WriteLine();
+
+        Console.WriteLine("顯示 array2D1 第二維元素值及第二維加總：");
+        total = 0;
+        index = 0;
+        for (int i = 0; i < array2D1.Length; i += array2D1.Rank)
+        {
+            if (i > 0) Console.Write("+");
+            Console.Write($"{array2D1[index, 1]}");
+            total += array2D1[index, 1];
+            index++;
+        }
+        Console.WriteLine("  合計為：{0} ", total);
+        Console.WriteLine();
+
+        Console.WriteLine("顯顯示 array2D2 所有元素值及所有元素值加總：");
+        total = 0;
+        index = 0;
+        for (int i = 0; i < array2D2.Length; i += 1)
+        {
+            if (i > 0) Console.Write(" + ");
+            if (i % 2 == 0)
+            {
+                total += array2D2[index, 1];
+                Console.Write($"{array2D2[index, 1]}");
+            }
+            else
+            {
+                total += array2D2[index, 0];
+                Console.Write($"{array2D2[index, 0]}");
+            }
+        }
+        Console.WriteLine("  合計為：{0} ", total);
+        Console.WriteLine();
+
+        Console.WriteLine("顯示 array3D 資料資訊：");
+        Console.WriteLine($"這是一個 {array3D.Rank} 維陣列 , 共有 {array3D.Length} 個元素");
+        for (int i = 0; i < array3D.Rank; i++)
+        {
+            Console.WriteLine("第 {0}維陣列共有 {1}個元素", i+1, array3D.GetLength(i));
+        }
+        Console.WriteLine();
+
+        BasicTools.ShowEnding();
+    }
+}
