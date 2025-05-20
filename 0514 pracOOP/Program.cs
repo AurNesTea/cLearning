@@ -15,6 +15,13 @@ internal class Program
         Console.WriteLine(Vino50.BaseInfor);
         Console.WriteLine();
 
+        Car car = new Car();
+        car.SetCarData(50, 30, 20);
+        int int_volume = car.GetCarVolume();
+        Console.WriteLine("車子的體積 = 長度 x 寛度 x 高度");
+        Console.WriteLine($"= {car.Length} x {car.Width} x {car.Height}");
+        Console.WriteLine($"= {int_volume}");
+
         Console.WriteLine("顏色枚舉類型所有元素為:");
         foreach (int s in Enum.GetValues(typeof(enColors)))
         {

@@ -6,6 +6,27 @@ namespace oop.demo;
 public class Car
 {
     /// <summary>
+    /// 設定車子體積參數事件範例：
+    /// </summary>
+    /// <param name="length">長度</param>
+    /// <param name="width">寛度</param>
+    /// <param name="height">高度</param>
+    /// 不回傳值(事件Event)：void寫法
+    public void SetCarData(int length, int width, int height)
+    {
+        Length = length;
+        Width = width;
+        Height = height;
+    }
+    /// 回傳值(方法 Mehtod)
+    public int GetCarVolume()
+    {
+        //體積=長度 x 寛度 x 高度 
+        int int_volume = Length * Width * Height;
+        return int_volume;
+    }
+
+    /// <summary>
     /// 廠牌名稱
     /// </summary>
     public string BrandName { get; set; } = "";
