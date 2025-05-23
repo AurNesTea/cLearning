@@ -8,7 +8,7 @@ namespace StrokeAlertApp.Api.Data
 {
     public class AssessmentDbContext : DbContext
     {
-        public AssessmentDbContext(DbContextOptions<AssessmentDbContext> options) : base(options) { }
+        public AssessmentDbContext(DbContextOptions<AssessmentDbContext> options) : base(options) {}
 
         public DbSet<StrokeAssessment> Assessments { get; set; }
     }

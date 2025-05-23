@@ -8,5 +8,5 @@ public class StrokeAssessment
     public bool FaceDrooping { get; set; }
     public bool ArmWeakness { get; set; }
     public bool SpeechDifficulty { get; set; }
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime Timestamp { get; set; }
 }
