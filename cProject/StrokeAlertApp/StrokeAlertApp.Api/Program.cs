@@ -21,14 +21,24 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
+else
+{
+    // 正式環境才啟用 HTTPS 導向
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthorization();
 
+// 開放靜態網頁存取, 
+// 在 app.UseHttpsRedirection() 後面，app.MapControllers() 前面，
+// 確保能正確處理靜態檔案（如 index.html）。
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 // 使用 Controller 路由
 app.MapControllers();
+
+
 
 app.Run();
 

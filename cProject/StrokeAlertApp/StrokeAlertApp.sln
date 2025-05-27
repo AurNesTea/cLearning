@@ -1,27 +1,35 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend_csharp", "backend_csharp", "{0271426B-70DB-63FF-5DDC-DB258EE887EF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrokeAlertApp.Api", "backend_csharp\StrokeAlertApp.Api\StrokeAlertApp.Api.csproj", "{8C40DFA3-5DD9-1EFF-112A-64E94D372CCC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrokeAlertApp.Api", "StrokeAlertApp.Api\StrokeAlertApp.Api.csproj", "{03A85634-6217-4361-BAD8-89A2244369C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8C40DFA3-5DD9-1EFF-112A-64E94D372CCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C40DFA3-5DD9-1EFF-112A-64E94D372CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C40DFA3-5DD9-1EFF-112A-64E94D372CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C40DFA3-5DD9-1EFF-112A-64E94D372CCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03A85634-6217-4361-BAD8-89A2244369C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03A85634-6217-4361-BAD8-89A2244369C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03A85634-6217-4361-BAD8-89A2244369C4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{03A85634-6217-4361-BAD8-89A2244369C4}.Debug|x64.Build.0 = Debug|Any CPU
+		{03A85634-6217-4361-BAD8-89A2244369C4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{03A85634-6217-4361-BAD8-89A2244369C4}.Debug|x86.Build.0 = Debug|Any CPU
+		{03A85634-6217-4361-BAD8-89A2244369C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03A85634-6217-4361-BAD8-89A2244369C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03A85634-6217-4361-BAD8-89A2244369C4}.Release|x64.ActiveCfg = Release|Any CPU
+		{03A85634-6217-4361-BAD8-89A2244369C4}.Release|x64.Build.0 = Release|Any CPU
+		{03A85634-6217-4361-BAD8-89A2244369C4}.Release|x86.ActiveCfg = Release|Any CPU
+		{03A85634-6217-4361-BAD8-89A2244369C4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{8C40DFA3-5DD9-1EFF-112A-64E94D372CCC} = {0271426B-70DB-63FF-5DDC-DB258EE887EF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {55061271-1D54-4095-ADF7-509C239ACF74}

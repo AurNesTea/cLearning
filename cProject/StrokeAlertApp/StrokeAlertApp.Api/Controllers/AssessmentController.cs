@@ -20,6 +20,9 @@ namespace StorkeAlertApp.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> SubmitAssessment([FromBody] StrokeAssessmentDto input)
         {
+            // 印出Log
+            Console.WriteLine($"收到請求：{input.UserName}, {input.FaceDrooping}, {input.ArmWeakness}, {input.SpeechDifficulty}");
+
             // 基本邏輯
             bool isHighRisk = input.FaceDrooping && input.ArmWeakness && input.SpeechDifficulty;
 

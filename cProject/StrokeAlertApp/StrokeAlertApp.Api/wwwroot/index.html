@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>中風自我評估</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 2em;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            color: #003366;
+        }
+
+        .question {
+            font-size: 1.2em;
+            margin-top: 2em;
+        }
+
+        .btn-group {
+            margin-top: 1em;
+        }
+
+        button {
+            padding: 0.6em 1.2em;
+            margin-right: 1em;
+            margin-top: 1em;
+        }
+
+        #result {
+            margin-top: 2em;
+            font-size: 1.2em;
+        }
+
+        .danger {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>中風自我評估</h1>
+
+    <label>
+        使用者姓名：
+        <input type="text" id="userName" required />
+    </label>
+
+    <div id="questionContainer" class="question"></div>
+    <div id="buttonContainer" class="btn-group"></div>
+    <div id="result"></div>
+
+    <script>
+        const questions = [
+            { key: "faceDrooping", text: "臉部是否歪斜？" },
+            { key: "armWeakness", text: "手臂是否無力？" },
+            { key: "speechDifficulty", text: "是否說話困難？" },
+        ];
+
+        let currentQuestion = 0;
+        const answers = {};
+
+        const questionContainer = document.getElementById("questionContainer");
+        const buttonContainer = document.getElementById("buttonContainer");
+        const resultDiv = document.getElementById("result");
+
+        function renderQuestion() {
+            questionContainer.innerText = questions[currentQuestion].text;
+            buttonContainer.innerHTML = "";
+
+            ["有", "沒有"].forEach((label) => {
+                const btn = document.createElement("button");
+                btn.textContent = label;
+                btn.onclick = () => handleAnswer(label === "有");
+                buttonContainer.appendChild(btn);
+            });
+        }
+
+        function handleAnswer(value) {
+            const key = questions[currentQuestion].key;
+            answers[key] = value;
+
+            // 顯示「下一題」或「送出」
+            buttonContainer.innerHTML = "";
+            const nextBtn = document.createElement("button");
+            nextBtn.textContent =
+                currentQuestion < questions.length - 1 ? "下一題" : "送出評估";
+
+            nextBtn.onclick =
+                currentQuestion < questions.length - 1 ? nextQuestion : submit;
+
+            buttonContainer.appendChild(nextBtn);
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            renderQuestion();
+        }
+
+        async function submit() {
+            const userNameInput = document.getElementById("userName");
+            const userName = userNameInput?.value.trim();
+
+            if (!userName) {
+                resultDiv.innerHTML = "<p class='danger'>請輸入使用者姓名</p>";
+                return;
+            }
+
+            const payload = {
+                userName,
+                ...answers,
+            };
+
+            console.log("送出資料：", payload);
+            try {
+                const res = await fetch("/Assessment", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                if (!res.ok) throw new Error("伺服器回應失敗");
+
+                const result = await res.json();
+                resultDiv.innerHTML = `<p>${result.result}</p>`;
+
+                if (result.result.includes("高風險")) {
+                    resultDiv.innerHTML +=
+                        '<p><a class="danger" href="tel:119">立即撥打 119</a></p>';
+                }
+
+                // 清除畫面
+                questionContainer.innerHTML = "";
+                buttonContainer.innerHTML = "";
+
+            } catch (err) {
+                resultDiv.innerHTML = `<p class='danger'>發生錯誤：${err.message}</p>`;
+            }
+        }
+        // 初始化顯示第一題
+        renderQuestion();
+    </script>
+</body>
+
+</html>
