@@ -1,0 +1,18 @@
+reader/
+├─ 📁 Forms             ← 放 UI 相關 Form，例如 MainForm.cs
+├─ 📁 Helpers           ← 工具類：檔案處理、主題切換、書籤儲存
+├─ 📁 Models            ← 進階：儲存設定或小說內容結構（可選）
+├─ 📁 Resources         ← 放內建圖片、字體、範本 TXT（可選）
+├─ Program.cs          ← 主入口不變
+├─ reader.csproj
+└─ appsettings.json     ← 可繼續用來記錄使用者偏好設定
+
+
+OpenFileDialog openFileDialog = new OpenFileDialog();
+openFileDialog.Filter = "Text files (*.txt)|*.txt";
+
+if (openFileDialog.ShowDialog() == DialogResult.OK)
+{
+    string text = File.ReadAllText(openFileDialog.FileName);
+    richTextBox1.Text = text;
+}

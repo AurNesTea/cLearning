@@ -1,0 +1,10 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="ReaderAvalonia.Views.MainView">
+
+  <StackPanel Margin="20">
+    <Button Content="開啟檔案" Name="OpenFileButton" Margin="0,0,0,10"/>
+    <TextBox Name="ContentBox" AcceptsReturn="True" Height="400"/>
+  </StackPanel>
+
+</UserControl>
