@@ -45,4 +45,13 @@ public class DelegateDemo : BaseClass
         str_value = $"累計：{int_value}";
         Console.WriteLine(str_value);
     }
+
+    public void Multip(int a, int b)
+    {
+        int_value += (a * b);
+        str_value = "事件：Multip";
+        str_value = $"{a} x {b} = {a * b}";
+        str_value = $"累計：{int_value}";
+        Console.WriteLine(int_value);
+    }
 }
