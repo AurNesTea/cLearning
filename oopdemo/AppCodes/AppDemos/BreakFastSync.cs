@@ -3,7 +3,7 @@ namespace oop.demo;
 /// <summary>
 /// 早餐同步作業
 /// </summary>
-public partial class Breakfast : BaseClass
+public partial class BreakFast : BaseClass
 {
     /// <summary>
     /// 倒杯咖啡

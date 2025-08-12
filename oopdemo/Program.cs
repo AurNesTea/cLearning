@@ -1,352 +1,473 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using oop.demo;
+namespace oop.demo;
+using System.Diagnostics;
+using System.Threading.Tasks;
+
 
 internal class Program
 {
-    public delegate void Score();
-    public static int TotalScore = 0;
     private static void Main(string[] args)
     {
-        #region Enum
-        // Enum.GetValues 方法
-        // 在指定的列舉中擷取常數值的陣列。
-        Console.WriteLine("在指定的列舉中擷取常數值的陣列。");
-        Console.WriteLine("顏色枚舉類型所有元素為:");
-        foreach (int s in Enum.GetValues(typeof(enColors)))
-        {
-            Console.WriteLine(s);
-        }
-        Console.WriteLine();
+        // 同步準備起床(一步驟完才進行下一步驟)
+        // demo01();
+        // 非同步準備起床(特定步驟(1-4,7-8,9-10)可同時進行)
+        demo02();
+        // 同步準備早餐(一步驟完才進行下一步驟)
+        //demo03();
+        // 非同步準備早餐(特定步驟(2-4)可同時進行)
+        //demo04();
 
-        Console.WriteLine("樣式枚舉類型所有元素為:");
-        foreach (int s in Enum.GetValues(typeof(enPetType)))
-        {
-            Console.WriteLine(s);
-        }
-        Console.WriteLine();
-
-        // Enum.GetNames 方法
-        // 在指定的列舉中擷取常數名稱的陣列。
-        Console.WriteLine("在指定的列舉中擷取常數名稱的陣列。");
-        Console.WriteLine("顏色枚舉類型所有元素為:");
-        foreach (string s in Enum.GetNames(typeof(enColors)))
-        {
-            Console.WriteLine(s);
-        }
-        Console.WriteLine();
-
-        Console.WriteLine("樣式枚舉類型所有元素為:");
-        foreach (string s in Enum.GetNames(typeof(enStyles)))
-        {
-            Console.WriteLine(s);
-        }
-        Console.WriteLine();
-
-        // Enum.IsDefined 方法
-        // 如果在 enumType 中的常數有等於 value 的數值，則為 true，否則為 false。
-        Object value = new object();
-
-        // 使用成員的基礎整數值調用 IsDefined.
-        Console.WriteLine("以下判斷結果以 enPetType 枚舉類型來當範例:");
-        value = 1;
-        Console.WriteLine("值 = {0} 時是否有定義 = {1}", value, Enum.IsDefined(typeof(enPetType), value));
-        // 使用無效的基礎整數值調用 IsDefined.
-        value = 64;
-        Console.WriteLine("值 = {0} 時是否有定義 = {1}", value, Enum.IsDefined(typeof(enPetType), value));
-        // 使用包含成員名稱的字符串調用 IsDefined.
-        value = "Rodent";
-        Console.WriteLine("值 = {0} 時是否有定義 = {1}", value, Enum.IsDefined(typeof(enPetType), value));
-        // 使用 enPetType 類型的變量調用 IsDefined.
-        value = enPetType.Dog;
-        Console.WriteLine("值 = {0} 時是否有定義 = {1}", value, Enum.IsDefined(typeof(enPetType), value));
-        value = enPetType.Dog | enPetType.Cat;
-        Console.WriteLine("值 = {0} 時是否有定義 = {1}", value, Enum.IsDefined(typeof(enPetType), value));
-        // 使用大寫成員名稱調用 IsDefined.
-        value = "None";
-        Console.WriteLine("值 = {0} 時是否有定義 = {1}", value, Enum.IsDefined(typeof(enPetType), value));
-        value = "NONE";
-        Console.WriteLine("值 = {0} 時是否有定義 = {1}", value, Enum.IsDefined(typeof(enPetType), value));
-        // 使用組合值調用 IsDefined
-        value = enPetType.Dog | enPetType.Bird;
-        Console.WriteLine("值 = {0:D} : 是否有定義 = {1}", value, Enum.IsDefined(typeof(enPetType), value));
-        Console.WriteLine();
-
-        // Enum.ToString 方法
-        Console.WriteLine("將這個執行個體的值轉換為它的相等字串表示。");
-        Enum myColors = enColors.Red;
-        Console.WriteLine("這個實例的值是 '{0}'", myColors.ToString());
-        #endregion
-
-        #region Value / Reference
-        // 傳值 (Call By Value) / 傳址 (Call By Reference)
-        Console.WriteLine("傳值 (Call By Value) / 傳址 (Call By Reference):");
-        A();
-        #endregion
-
-        #region 繼承
-        // 繼承範例程式
-        Console.WriteLine("繼承範例程式:");
-        Lite Vino50 = new Lite();
-        Vino50.BrandName = "YAMAHA";
-        Vino50.ModelName = "VINO";
-        Vino50.CC = 50;
-        Vino50.Color = enColors.Red;
-        Vino50.OilType = enOilType.Type95;
-        Console.WriteLine(Vino50.BaseInfo);
-
-        // 測試事件及方法
-        Car car = new Car();
-        car.SetCarData(50, 20, 30);
-        int int_volume = car.GetCarValume();
-        Console.WriteLine("車子的體積 = 長度 x 寛度 x 高度");
-        Console.WriteLine($"= {car.Length} x {car.Width} x {car.Height}");
-        Console.WriteLine($"= {int_volume}");
-        #endregion
-
-        #region 解構子
-        // 使用解構子的各種範例
-        //範例一
-        Console.WriteLine("使用解構子, 範例一:");
-        Lite YamahaYY50 = new Lite();
-        YamahaYY50.BrandName = "YAMAHA";
-        YamahaYY50.ModelName = "YY60";
-        YamahaYY50.Color = enColors.Red;
-        Console.WriteLine($"YamahaYY50: {YamahaYY50.BrandName}, {YamahaYY50.ModelName}, {YamahaYY50.Color}");
-
-        //範例二
-        Console.WriteLine("使用解構子, 範例二");
-        using (Lite YamahaYY60 = new Lite())
-        {
-            using (Lite YamahaYY61 = new Lite())
-            {
-                YamahaYY60.BrandName = "YAMAHA";
-                YamahaYY60.ModelName = "YY60";
-                YamahaYY60.Color = enColors.Red;
-                Console.WriteLine($"YamahaYY60: {YamahaYY60.BrandName} {YamahaYY60.ModelName} {YamahaYY60.Color}");
-
-                YamahaYY61.BrandName = "YAMAHA";
-                YamahaYY61.ModelName = "YY61";
-                YamahaYY61.Color = enColors.Red;
-                Console.WriteLine($"YamahaYY61: {YamahaYY60.BrandName} {YamahaYY60.ModelName} {YamahaYY60.Color}");
-            }
-        }
-        //範例三
-        Console.WriteLine("使用解構子, 範例三");
-        using (Lite YamahaYY70 = new Lite())
-        using (Lite YamahaYY71 = new Lite())
-        {
-            YamahaYY70.BrandName = "YAMAHA";
-            YamahaYY70.ModelName = "YY70";
-            YamahaYY70.Color = enColors.Red;
-            Console.WriteLine($"YamahaYY70: {YamahaYY70.BrandName} {YamahaYY70.ModelName} {YamahaYY70.Color}");
-
-            YamahaYY71.BrandName = "YAMAHA";
-            YamahaYY71.ModelName = "YY71";
-            YamahaYY71.Color = enColors.Red;
-            Console.WriteLine($"YamahaYY71: {YamahaYY71.BrandName} {YamahaYY71.ModelName} {YamahaYY71.Color}");
-        }
-
-        //範例四
-        Console.WriteLine("使用解構子, 範例四");
-        using var YamahaYY91 = new Lite();
-        using var YamahaYY92 = new Lite();
-        YamahaYY91.Color = enColors.Blue;
-        YamahaYY91.BrandName = "Yamaha";
-        YamahaYY91.ModelName = "YY91";
-        YamahaYY92.Color = enColors.Red;
-        YamahaYY92.BrandName = "Yamaha";
-        YamahaYY92.ModelName = "YY92";
-        Console.WriteLine($"YamahaYY91: {YamahaYY91.BrandName}, {YamahaYY91.ModelName}, {YamahaYY91.Color}");
-        Console.WriteLine($"YamahaYY92: {YamahaYY92.BrandName}, {YamahaYY92.ModelName}, {YamahaYY92.Color}");
-        #endregion
-
-        #region 建構子
-        // 實作化類別使用建構子範例
-        // 不使用 using
-        Console.WriteLine("不使用 using");
-        Lite YamahaYY31 = new Lite();
-        YamahaYY31.BrandName = "Yamaha";
-        YamahaYY31.ModelName = "YY61";
-        YamahaYY31.Color = enColors.Blue;
-        YamahaYY31.CC = 125;
-        YamahaYY31.OilType = enOilType.Type98;
-        Console.WriteLine(YamahaYY31.BaseInfo);
-
-        Lite YamahaYY32 = new Lite("Yamaha", "YY32", enColors.Red);
-        YamahaYY32.CC = 150;
-        YamahaYY32.OilType = enOilType.Type95;
-        Console.WriteLine(YamahaYY32.BaseInfo);
-
-        Console.WriteLine();
-        Console.WriteLine("使用 using");
-        using (Lite YamahaYY61 = new Lite())
-        {
-            YamahaYY61.BrandName = "YAMAHA";
-            YamahaYY61.ModelName = "YY61";
-            YamahaYY61.Color = enColors.Blue;
-            YamahaYY61.CC = 125;
-            YamahaYY61.OilType = enOilType.Type98;
-            Console.WriteLine(YamahaYY61.BaseInfo);
-        }
-
-        using (Lite YamahaYY62 = new Lite("YAMAHA", "YY62", enColors.Red))
-        {
-            YamahaYY62.CC = 125;
-            YamahaYY62.OilType = enOilType.Type95;
-            Console.WriteLine(YamahaYY62.BaseInfo);
-        }
-        #endregion
-
-        #region 多載
-        // 方法多載
-        Console.WriteLine("方法多載");
-        using (ClassAdd classAdd = new ClassAdd())
-        {
-            int int_value1 = classAdd.Add(4);
-            int int_value2 = classAdd.Add(1, 2);
-            double dbl_value = classAdd.Add(0.5d, 0.3d);
-            Console.WriteLine($"整數自我相加 4 + 4 = {int_value1}");
-            Console.WriteLine($"整數相加 1 + 2 = {int_value2}");
-            Console.WriteLine($"小數相加 0.5 + 0.3 = {dbl_value}");
-        }
-
-        // 建構子多載
-        Console.WriteLine("建構子多載:");
-        using var car1 = new Car();
-        using var car2 = new Car("BMW", "X5");
-        Console.WriteLine($"car1 = {car1.BrandName}, {car1.ModelName}, {car1.Color}");
-        Console.WriteLine($"car2 = {car.BrandName}, {car2.ModelName}, {car2.Color}");
-        #endregion
-
-        #region 部分類別(Partial Class)
-        Console.WriteLine("Partial Class Example:");
-        string str_msg = "";
-        using (var storyBook = new Storybook())
-        {
-            storyBook.BookNo = "A0001";
-            storyBook.BookName = "我的故事書";
-            storyBook.PulisherName = "光明出版社";
-            storyBook.BookPrice = 500;
-
-            str_msg += $"書號:{storyBook.BookNo} ";
-            str_msg += $"書名:{storyBook.BookName} ";
-            Console.WriteLine(str_msg);
-            str_msg += $"出版社:{storyBook.BookNo} ";
-            str_msg += $"售價:{storyBook.BookPrice}";
-            Console.WriteLine(str_msg);
-        }
-        #endregion
-
-        #region 多型(Polymorphism)
-        using var person = new Person();
-        using var daming = new Daming();
-        using var xiaohua = new Xiaohua();
-        Console.WriteLine(person.PersonInfo());
-        Console.WriteLine(daming.PersonInfo());
-        Console.WriteLine(xiaohua.PersonInfo());
-        #endregion
-
-        #region 靜態(Static)
-        // Static Class
-        Console.WriteLine("靜態(Static): Static Class");
-        UserService.UserNo = "001";
-        UserService.UserName = "Damin Wang";
-        UserService.Login();
-        Console.WriteLine(UserService.LoginInfo);
-
-        UserService.Login("002", "Xaiohua");
-        Console.WriteLine(UserService.LoginInfo);
-
-        UserService.Logout();
-        Console.WriteLine(UserService.LoginInfo);
-
-        // 類別設定成不是靜態,屬性設定成靜態
-        Console.WriteLine("靜態(Static): 類別設定成不是靜態,屬性設定成靜態");
-        UserService2.UserNo = "010";
-        UserService2.UserName = "Daming Wang";
-        using var user = new UserService2();
-        //登入
-        user.Login();
-        Console.WriteLine(UserService2.LoginInfo);
-        //登入
-        user.Login("002", "Xiaohua Lee");
-        Console.WriteLine(UserService2.LoginInfo);
-        //登出
-        user.Logout();
-        Console.WriteLine(UserService2.LoginInfo);
-        #endregion
-
-        #region Interface
-        Console.WriteLine();
-        Console.WriteLine("Interface example");
-        using var fruit = new FruitCarton();
-        fruit.Package();
-        Console.WriteLine(fruit.CartonInfo);
-        #endregion
-
-        #region 泛型 Generics
-        Console.WriteLine();
-        Console.WriteLine("泛型 Generics example");
-        //數字
-        Console.WriteLine("----------------數字---------------");
-        GenericDemo<int> intValue = new GenericDemo<int>();
-        intValue.AddItem(3); intValue.AddItem(4); intValue.AddItem(5); intValue.AddItem(2);
-        int index = 0;
-        foreach (var item in intValue.DataList)
-        {
-            index++;
-            Console.WriteLine($"第 {index}  個元素值 = {item}");
-        }
-
-        //文字
-        Console.WriteLine();
-        Console.WriteLine("----------------文字---------------");
-        GenericDemo<string> strValue = new GenericDemo<string>();
-        strValue.AddItem("王小明"); strValue.AddItem("陳小月"); strValue.AddItem("楊小國"); strValue.AddItem("李小天");
-        var index2 = 0;
-        foreach (var item in strValue.DataList)
-        {
-            index2++;
-            Console.WriteLine($"第 {index2} 個元素值 = {item}");
-        }
-
-        //模型類別
-        Console.WriteLine();
-        Console.WriteLine("----------------模型類別---------------");
-        GenericDemo<Users> users = new GenericDemo<Users>();
-        users.AddItem(new Users() { UserNo = "001", UserName = "王大明", Age = 20 });
-        users.AddItem(new Users() { UserNo = "002", UserName = "王小明", Age = 20 });
-        users.AddItem(new Users() { UserNo = "003", UserName = "王大華", Age = 20 });
-        var index3 = 0;
-        foreach (var item in users.DataList)
-        {
-            index3++;
-            Console.WriteLine($"{index3}. UserNo={item.UserNo}, UserName={item.UserName}, UserAge={item.Age}");
-        }
-        #endregion
-
-        #region 委派 Delegate
-        Console.WriteLine();
-        Console.WriteLine("委派 Delegate example");
-        //數字
-        using var demo = new DelegateDemo();
-        demo.Run();
-        #endregion
-
-        Console.WriteLine("按任意鍵結束 ...");
+        Console.Write("按任意鍵結束 ...");
         Console.ReadKey();
     }
 
-    public static void A()
+    /// <summary>
+    /// 同步準備起床(一步驟完才進行下一步驟)
+    /// 1.刷牙 (BrushTeeth) (耗時：2秒)
+    /// 2.洗臉 (WashFace)  (耗時：3秒)
+    /// 3.洗澡 (Bath) (耗時：4秒)
+    /// 4.洗頭 (Shampoo)  (耗時：2秒)
+    /// 5.吹乾頭髮 (BlowDryHair)  (耗時：1秒) 
+    /// 6.穿衣服 (WearClothes)   (耗時：2秒) 
+    /// 7.喝牛奶 (DrinkMilk)  (耗時：1秒)  
+    /// 8.吃麵包 (EatBread)  (耗時：3秒)  
+    /// 9.坐公車 (TakeBus)  (耗時：6秒)  
+    /// 10.看書 (Reading)  (耗時：3秒) 
+    /// </summary>
+    private static void demo01()
     {
-        int X = 0;
-        int W = B(X);
-        Console.WriteLine($"X = {X}, W = {W}");
+        // 引用起床類別
+        using (GetUp getUp = new GetUp())
+        {
+            // 設定變數
+            int int_step = 0;
+            int int_count = 0;
+            List<string> jobNames = new List<string>() { "刷牙", "洗臉", "洗澡", "洗頭", "吹乾頭髮", "穿衣服", "喝牛奶", "吃麵包", "坐公車", "看書" };
+            List<int> jobDelays = new List<int>() { 2, 3, 4, 2, 1, 2, 1, 3, 6, 3 };
+
+            // 開始計時
+            Utilitys.stopwatch = Stopwatch.StartNew();
+
+            // 顯示標題列
+            Utilitys.ShowTitle("demo01.同步準備起床(一步驟完才進行下一步驟)", 61);
+            Console.WriteLine("== ==== ==== ================================================");
+            Console.WriteLine("序 耗時 累計 動作名稱");
+            Console.WriteLine("== ==== ==== ================================================");
+
+            int_count = 0;
+            for (int i = 0; i < jobNames.Count; i++)
+            {
+                int_count += jobDelays[i];
+                Console.Write("{0}   ", i.ToString().PadLeft(2, '0'));
+                Console.Write("{0}   ", jobDelays[i].ToString().PadLeft(2, '0'));
+                Console.Write("{0} ", int_count.ToString().PadLeft(2, '0'));
+                Console.Write("{0}\r\n", jobNames[i]);
+            }
+            Console.WriteLine("== ==== ==== ================================================");
+            Console.WriteLine();
+            Console.WriteLine("執行結果如下：");
+            Console.WriteLine("== ======== ============================== ======== ==== ====");
+            Console.WriteLine("序 開始時間 動作名稱                       結束時間 耗時 累計");
+            Console.WriteLine("== ======== ============================== ======== ==== ====");
+
+            // 執行 10 個動作
+            for (int i = 0; i < 10; i++)
+            {
+                int_step = i + 1;
+                Utilitys.SetJobStepStart(int_step, jobNames[i], jobDelays[i], true);
+                if (int_step == 1) getUp.BrushTeeth(jobDelays[i]);
+                if (int_step == 2) getUp.WashFace(jobDelays[i]);
+                if (int_step == 3) getUp.Bath(jobDelays[i]);
+                if (int_step == 4) getUp.Shampoo(jobDelays[i]);
+                if (int_step == 5) getUp.BlowDryHair(jobDelays[i]);
+                if (int_step == 6) getUp.WearClothes(jobDelays[i]);
+                if (int_step == 7) getUp.DrinkMilk(jobDelays[i]);
+                if (int_step == 8) getUp.EatBread(jobDelays[i]);
+                if (int_step == 9) getUp.TakeBus(jobDelays[i]);
+                if (int_step == 10) getUp.Reading(jobDelays[i]);
+                Utilitys.SetJobStepEnd();
+            }
+
+            // 等待輸入任意鍵結束.  
+            Console.WriteLine("== ============================== ======== ======== ==== ====");
+            Utilitys.ShowEnding();
+            Utilitys.stopwatch.Stop();
+        }
+    }
+    /// <summary>
+    /// 非同步準備起床(特定步驟(1-4,7-8,9-10)可同時進行)
+    ///--1.刷牙 (BrushTeeth) (耗時：2秒)
+    ///| 2.洗臉 (WashFace)  (耗時：3秒)
+    ///| 3.洗澡 (Bath) (耗時：4秒)
+    ///--4.洗頭 (Shampoo)  (耗時：2秒)
+    ///  5.吹乾頭髮 (BlowDryHair)  (耗時：1秒) 
+    ///  6.穿衣服 (WearClothes)   (耗時：2秒)
+    ///--7.喝牛奶 (DrinkMilk)  (耗時：1秒)  
+    ///|-8.吃麵包 (EatBread)  (耗時：3秒)  
+    ///--9.坐公車 (TakeBus)  (耗時：6秒)  
+    ///|-10.看書 (Reading)  (耗時：3秒) 
+    /// </summary>
+    private async static void demo02()
+    {
+        using (GetUp getUp = new GetUp())
+        {
+            // 引用起床模型
+            using (JobModel jobModel = new JobModel())
+            {
+                // 設定變數
+                List<Job> getupList = jobModel.GetGetupJobList();
+
+                // 顯示標題列
+                Utilitys.ShowTitle("demo02.非同步準備起床(特定步驟(1-4,7-8,9-10)可同時進行)", 61);
+                Console.WriteLine("== ==== ==== ================================================");
+                Console.WriteLine("序 耗時 累計 動作名稱");
+                Console.WriteLine("== ==== ==== ================================================");
+                for (int i = 0; i < getupList.Count; i++)
+                {
+                    Console.Write("{0}   ", (i + 1).ToString().PadLeft(2, '0'));
+                    Console.Write("{0}   ", getupList[i].JobDelay.ToString().PadLeft(2, '0'));
+                    if (getupList[i].TotalsAsync == 0)
+                        Console.Write("   ");
+                    else
+                        Console.Write("{0} ", getupList[i].TotalsAsync.ToString().PadLeft(2, '0'));
+                    Console.Write("{0}\r\n", getupList[i].JobName);
+                    if (i == 3 || i == 4 || i == 5 || i == 7 || i == 9)
+                        Console.WriteLine("-- ---- ---- ------------------------------------------------");
+                }
+
+                Console.WriteLine("== ==== ==== ================================================");
+                Console.WriteLine();
+                Console.WriteLine("執行結果如下：");
+                Console.WriteLine("== ======== ============================== ======== ==== ====");
+                Console.WriteLine("序 開始時間 動作名稱                       結束時間 耗時 累計");
+                Console.WriteLine("== ======== ============================== ======== ==== ====");
+
+                // 開始計時
+                Utilitys.stopwatch = Stopwatch.StartNew();
+
+                // 步驟 1 - 4 非同步執行
+                Utilitys.SetStartTime();
+
+                // 設定步驟 1 - 4 非同步變數
+                // 1.刷牙 (BrushTeeth) (耗時：2秒)
+                var brushTeethTask = getUp.BrushTeethTask(getupList[0].JobDelay);
+                // 2.洗臉 (WashFace)  (耗時：3秒)
+                var washFaceTask = getUp.WashFaceTask(getupList[1].JobDelay);
+                // 3.洗澡 (Bath) (耗時：4秒)
+                var bathTask = getUp.BathTask(getupList[2].JobDelay);
+                // 4.洗頭 (Shampoo)  (耗時：2秒)
+                var shampooTask = getUp.ShampooTask(getupList[3].JobDelay);
+
+                // 加入步驟 1 - 4 非同步變數到工作陣列中
+                var Task1 = new List<Task> { brushTeethTask, washFaceTask, bathTask, shampooTask };
+                while (Task1.Count > 0)
+                {
+                    // 取得已完成的工作
+                    Task finishedTask = await Task.WhenAny(Task1);
+
+                    // 執行已完成的工作
+                    if (finishedTask == brushTeethTask) Utilitys.SetJobStepEnd(1, getupList[0].JobName, getupList[0].JobDelay);
+                    if (finishedTask == washFaceTask) Utilitys.SetJobStepEnd(2, getupList[1].JobName, getupList[1].JobDelay);
+                    if (finishedTask == bathTask) Utilitys.SetJobStepEnd(3, getupList[2].JobName, getupList[2].JobDelay);
+                    if (finishedTask == shampooTask) Utilitys.SetJobStepEnd(4, getupList[3].JobName, getupList[3].JobDelay);
+
+                    // 從工作陣列中移除已完成的工作
+                    Task1.Remove(finishedTask);
+                }
+                // 步驟 5 吹乾頭髮 同步執行
+                Utilitys.SetJobStepStart(5, getupList[4].JobName + " (同步)", getupList[4].JobDelay, true);
+                getUp.BlowDryHair(getupList[4].JobDelay);
+                Utilitys.SetJobStepEnd();
+
+                // 步驟 6 穿衣服 同步執行
+                Utilitys.SetJobStepStart(6, getupList[5].JobName + " (同步)", getupList[5].JobDelay, true);
+                getUp.WearClothes(getupList[5].JobDelay);
+                Utilitys.SetJobStepEnd();
+
+                // 步驟 7 - 8 非同步執行
+                Utilitys.SetStartTime();
+
+                // 設定步驟 7 - 8 非同步變數
+                // 7.喝牛奶 (DrinkMilk)  (耗時：1秒) 
+                var drinkMilkTask = Utilitys.DelayAsync(getupList[6].JobDelay);
+                // 8.吃麵包 (EatBread)  (耗時：3秒)
+                var eatBreadTask = Utilitys.DelayAsync(getupList[7].JobDelay);
+
+                // 加入步驟 1 - 4 非同步變數到工作陣列中
+                var Task2 = new List<Task> { drinkMilkTask, eatBreadTask };
+                while (Task2.Count > 0)
+                {
+                    // 取得已完成的工作
+                    Task finishedTask = await Task.WhenAny(Task2);
+
+                    // 執行已完成的工作
+                    if (finishedTask == drinkMilkTask) Utilitys.SetJobStepEnd(7, getupList[6].JobName, getupList[6].JobDelay);
+                    if (finishedTask == eatBreadTask) Utilitys.SetJobStepEnd(8, getupList[7].JobName, getupList[7].JobDelay);
+
+                    // 從工作陣列中移除已完成的工作
+                    Task2.Remove(finishedTask);
+                }
+
+                // 步驟 9 - 10 非同步執行
+                Utilitys.SetStartTime();
+
+                // 設定步驟 9 - 10 非同步變數
+                var takeBusTask = Utilitys.DelayAsync(getupList[8].JobDelay); // 9.坐公車 (TakeBus)  (耗時：6秒)
+                var readingTask = Utilitys.DelayAsync(getupList[9].JobDelay); // 10.看書 (Reading)  (耗時：3秒)
+
+                // 加入步驟 9 - 10 非同步變數到工作陣列中
+                var Task3 = new List<Task> { takeBusTask, readingTask };
+                while (Task3.Count > 0)
+                {
+                    // 取得已完成的工作
+                    Task finishedTask = await Task.WhenAny(Task3);
+
+                    // 執行已完成的工作
+                    if (finishedTask == takeBusTask) Utilitys.SetJobStepEnd(9, getupList[8].JobName, getupList[8].JobDelay);
+                    if (finishedTask == readingTask) Utilitys.SetJobStepEnd(10, getupList[9].JobName, getupList[9].JobDelay);
+
+                    // 從工作陣列中移除已完成的工作
+                    Task3.Remove(finishedTask);
+                }
+
+                // 等待輸入任意鍵結束
+                Console.WriteLine("== ==== ==== ================================================");
+                Utilitys.ShowEnding();
+                Utilitys.stopwatch.Stop();
+            }
+        }
     }
 
-    public static int B(int Y)
+    /// <summary>
+    /// 同步準備早餐
+    /// 1.倒杯咖啡。（耗時：2秒）
+    /// 2.熱鍋。（耗時：3秒）
+    /// 3.煎兩顆蛋。（可同步執行耗時：每粒蛋需耗時3秒 = 6秒）
+    /// 4.煎三片培根。（可同步執行耗時：切片需耗時2秒，煎培根需耗時 3 秒） 
+    /// 5.烤兩片吐司。（可同步執行耗時：不管片數一律 4 秒）
+    /// 6.在吐司塗上奶油和果醬
+    /// 7.在吐司塗上奶油。（耗時：2秒）
+    /// 8.在吐司塗上果醬。（耗時：2秒）
+    /// 9.倒杯柳橙汁。（耗時：6秒）
+    /// </summary>
+    private static void demo03()
     {
-        Y += 100;
-        return Y;
+        // 引用早餐類別
+        using (BreakFast breakFast = new BreakFast())
+        {
+            using (JobModel jobModel = new JobModel())
+            {
+                // 設定變數
+                int int_step = 0;
+                int int_delay = 0;
+                string str_job_name = "";
+                List<Job> model = jobModel.GetBreakFastJobList();
+
+                // 開始計時
+                Utilitys.stopwatch = Stopwatch.StartNew();
+
+                // 顯示標題列
+                Utilitys.ShowTitle("demo03.同步準備早餐(一步驟完才進行下一步驟)", 61);
+                Console.WriteLine("== ==== ==== ================================================");
+                Console.WriteLine("序 耗時 累計 動作名稱");
+                Console.WriteLine("== ==== ==== ================================================");
+
+                int_step = 0;
+                for (int i = 0; i < model.Count; i++)
+                {
+                    int_step = i + 1;
+                    Console.Write("{0}   ", int_step.ToString().PadRight(2, ' '));
+                    Console.Write("{0}   ", model[i].JobDelay.ToString().PadLeft(2, ' '));
+                    Console.Write("{0}   ", model[i].TotalsSync.ToString().PadLeft(2, ' '));
+                    Console.Write("{0}\r\n", model[i].JobName);
+                }
+                Console.WriteLine("== ==== ==== ================================================");
+                Console.WriteLine();
+                Console.WriteLine("執行結果如下：");
+                Console.WriteLine("== ======== ============================== ======== ==== ====");
+                Console.WriteLine("序 開始時間 動作名稱                       結束時間 耗時 累計");
+                Console.WriteLine("== ======== ============================== ======== ==== ====");
+
+                // 執行所有步驟
+                int_step = 0;
+                for (int i = 0; i < model.Count; i++)
+                {
+                    int_step = i + 1; int_delay = model[i].JobDelay; str_job_name = model[i].JobName;
+                    Utilitys.SetJobStepStart(int_step, str_job_name, int_delay, true);
+
+                    if (int_step == 1) breakFast.PourCoffee(int_delay); // 1.倒杯咖啡。（耗時：2秒）
+                    if (int_step == 2) breakFast.HeatingPot(int_delay); // 2.熱鍋（耗時：3秒）
+                    if (int_step == 3) breakFast.FryEggs(2, int_delay); // 3.煎兩顆蛋。（耗時：每粒蛋需耗時3秒 = 6秒）
+                    if (int_step == 4) breakFast.FryBacon(2, 3); // 4.煎三片培根。（耗時：切片需耗時2秒，煎培根需耗時 3 秒）
+                    if (int_step == 5) breakFast.ToastBread(int_delay); // 5.烤兩片吐司。（耗時：不管片數一律 4 秒）
+                    if (int_step == 6) breakFast.ApplyJam(int_delay); // 7.塗果醬。（耗時：2 秒）
+                    if (int_step == 7) breakFast.ApplyButter(int_delay); // 8.塗奶油。（耗時：2 秒）
+                    if (int_step == 8) breakFast.PourOrangeJuice(int_delay); // 9.倒杯柳橙汁。（耗時：6秒）
+
+                    Utilitys.SetJobStepEnd();
+                }
+                // 結束所有作業
+                Console.WriteLine("== ==== ==== ================================================");
+                Utilitys.ShowEnding();
+                Utilitys.stopwatch.Stop();
+            }
+        }
+    }
+    /// <summary>
+    /// 非同步準備早餐(特定步驟(2-4)可同時進行)
+    /// 1.倒杯咖啡。（耗時：2秒）
+    /// 2.熱鍋。（耗時：3秒）
+    /// 3.煎兩顆蛋。（可同步執行耗時：每粒蛋需耗時3秒 = 6秒）
+    /// 4.煎三片培根。（可同步執行耗時：切片需耗時2秒，煎培根需耗時 3 秒） 
+    /// 5.烤兩片吐司。（可同步執行耗時：不管片數一律 4 秒）
+    /// 6.在吐司塗上奶油和果醬
+    /// 7.在吐司塗上奶油。（耗時：2秒）
+    /// 8.在吐司塗上果醬。（耗時：2秒）
+    /// 9.倒杯柳橙汁。（耗時：6秒）
+    /// </summary>
+    private async static void demo04()
+    {
+        // 引用早餐類別
+        using (BreakFast breakFast = new BreakFast())
+        {
+            using (JobModel jobModel = new JobModel())
+            {
+                // 設定變數
+                int int_step = 0;
+                int int_delay = 0;
+                string str_job_name = "";
+                //吐司物件
+                Toast toast = new Toast();
+
+                List<Job> model = jobModel.GetBreakFastJobList();
+
+                // 開始計時
+                Utilitys.stopwatch = Stopwatch.StartNew();
+
+                // 顯示標題列
+                Utilitys.ShowTitle("demo04.非同步準備早餐(特定步驟(3-5 , 6-8)可同時進行)", 61);
+                Console.WriteLine("== ==== ==== ================================================");
+                Console.WriteLine("序 耗時 累計 動作名稱");
+                Console.WriteLine("== ==== ==== ================================================");
+
+                for (int i = 0; i < model.Count; i++)
+                {
+                    int_step = i + 1;
+                    Console.Write("{0}   ", int_step.ToString().PadRight(2, ' '));
+                    if (model[i].JobDelay == 0)
+                        Console.Write("{0}   ", " ".ToString().PadLeft(2, ' '));
+                    else
+                        Console.Write("{0}   ", model[i].JobDelay.ToString().PadLeft(2, ' '));
+
+                    if (model[i].TotalsAsync == 0)
+                        Console.Write("{0}   ", " ".ToString().PadLeft(2, ' '));
+                    else
+                        Console.Write("{0}   ", model[i].TotalsAsync.ToString().PadLeft(2, ' '));
+
+                    Console.WriteLine("{0}", model[i].JobName);
+
+                    if (int_step == 6)
+                        Console.Write(" -- 提示動作，不執行");
+                    if (int_step == 7 || int_step == 8)
+                        Console.Write(" -- 同步執行");
+
+                    Console.WriteLine();
+                    if (int_step <= 2 || int_step >= 5)
+                        Console.Write("-- ---- ---- ------------------------------------------------");
+                }
+                Console.WriteLine("== ==== ==== ================================================");
+                Console.WriteLine();
+                Console.WriteLine("執行結果如下：");
+                Console.WriteLine("== ======== ============================== ======== ==== ====");
+                Console.WriteLine("序 開始時間 動作名稱                       結束時間 耗時 累計");
+                Console.WriteLine("== ======== ============================== ======== ==== ====");
+
+                // 步驟 1 - 2 (同步)
+                for (int i = 0; i < 2; i++)
+                {
+                    int_step = i + 1;
+                    int_delay = model[i].JobDelay;
+                    str_job_name = model[i].JobName;
+                    Utilitys.SetJobStepStart(int_step, str_job_name, int_delay, true);
+                    // 1.倒杯咖啡。（耗時：2秒）
+                    if (i == 1)
+                        breakFast.PourCoffee(int_delay);
+                    // 2.熱鍋（耗時：3秒）
+                    if (i == 2)
+                        breakFast.HeatingPot(int_delay);
+
+                    Utilitys.SetJobStepEnd();
+                }
+                // 步驟 3 - 5 (非同步)
+                Utilitys.SetStartTime();
+
+                // 設定步驟 3 - 5非同步變數
+                // 3.煎兩顆蛋。（耗時：每粒蛋需耗時3秒 = 6秒）
+                var eggsTask = breakFast.FryEggsTask(model[int_step].JobDelay);
+                // 4.煎三片培根。（耗時：切片需耗時2秒，煎培根需耗時 3 秒）
+                var baconTask = breakFast.FryBaconTask(2, 3);
+                // 5.烤兩片吐司。（耗時：不管片數一律 4 秒）
+                var toastTask = breakFast.ToastBreadTask(model[int_step + 2].JobDelay);
+
+                // 加入步驟 3 - 5 非同步變數到工作陣列中
+                var asyncTasks = new List<Task> { eggsTask, baconTask, toastTask };
+                while (asyncTasks.Count > 0)
+                {
+                    // 取得已完成的工作
+                    Task finishedTask = await Task.WhenAny(asyncTasks);
+
+                    // 執行已完成的工作
+                    if (finishedTask == eggsTask)
+                    {
+                        Utilitys.SetJobStepStart(3, "煎兩顆蛋已完成", model[2].JobDelay, false);
+                        Utilitys.SetJobStepEnd();
+                    }
+                    if (finishedTask == baconTask)
+                    {
+                        Utilitys.SetJobStepStart(4, "煎培根已完成", model[3].JobDelay, false);
+                        Utilitys.SetJobStepEnd();
+                    }
+                    if (finishedTask == toastTask)
+                    {
+                        Utilitys.SetJobStepStart(5, "烤吐司已完成", model[4].JobDelay, false);
+                        Utilitys.SetJobStepEnd();
+                    }
+
+                    // 從工作陣列中移除已完成的工作
+                    asyncTasks.Remove(finishedTask);
+                }
+
+                // 步驟 6 - 9 (同步)
+                int_step = 0;
+                for (int i = 5; i < 9; i++)
+                {
+                    int_step = i + 1;
+                    str_job_name = model[i].JobName;
+                    int_delay = model[i].JobDelay;
+                    Utilitys.SetJobStepStart(int_step, str_job_name, int_delay, true);
+
+                    // 7.塗上奶油（耗時：2秒）
+                    if (int_step == 7)
+                    {
+                        breakFast.ApplyButter(model[i].JobDelay);
+                    }
+                    // 8.塗上果醬（耗時：2秒）
+                    if (int_step == 8)
+                    {
+                        breakFast.ApplyJam(model[i].JobDelay);
+                    }
+                    // 9.倒杯柳橙汁（耗時：6秒）
+                    if (int_step == 9)
+                    {
+                        breakFast.PourOrangeJuice(model[i].JobDelay);
+                    }
+
+                    Utilitys.SetJobStepEnd();
+                }
+                // 10.結束所有作業
+                Console.WriteLine("== ==== ==== ================================================");
+                Utilitys.ShowEnding();
+                Utilitys.stopwatch.Stop();
+            }
+        }
     }
 }
